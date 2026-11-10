@@ -1,37 +1,21 @@
-
-/* =========================================
-   NOIR - Main JavaScript
-========================================= */
-
+// Pequenos comportamentos da página inicial.
 document.addEventListener("DOMContentLoaded", () => {
+  // Fecha o menu mobile depois de selecionar uma âncora da própria página.
+  const navCollapse = document.getElementById("mainNavigation");
+  const navLinks = document.querySelectorAll('#mainNavigation a[href^="#"]');
 
-    console.log("NOIR website loaded successfully.");
-
-    // Close mobile navbar after clicking a link
-
-    const navLinks = document.querySelectorAll(
-        ".navbar-collapse .nav-link"
-    );
-
-    const navbarCollapse = document.querySelector(
-        ".navbar-collapse"
-    );
-
-    navLinks.forEach(link => {
-
-        link.addEventListener("click", () => {
-
-            if (navbarCollapse.classList.contains("show")) {
-
-                const bsCollapse = bootstrap.Collapse.getOrCreateInstance(
-                    navbarCollapse
-                );
-
-                bsCollapse.hide();
-            }
-
-        });
-
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.bootstrap && navCollapse.classList.contains("show")) {
+        window.bootstrap.Collapse.getOrCreateInstance(navCollapse).hide();
+      }
     });
+  });
 
+  // Mantém a navegação acessível quando o utilizador usa a tecla Escape.
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && navCollapse?.classList.contains("show")) {
+      window.bootstrap?.Collapse.getOrCreateInstance(navCollapse).hide();
+    }
+  });
 });
